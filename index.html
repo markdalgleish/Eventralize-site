@@ -1,0 +1,162 @@
+<!doctype html>
+<html>
+<head>
+<title>Eventralize &mdash; jQuery Events for Object Oriented JavaScript</title>
+<meta name="viewport" content="width=740" />
+<link href="css/style.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+
+<article>
+	
+	<header>
+		<hgroup>
+			<h1>Eventralize.</h1>
+			<h2 data-analytics-category="SubHeading" data-analytics-subcategory="Top">jQuery Events for Object Oriented JavaScript.</h2>
+		</hgroup>
+	</header>
+	
+	<div id="forkme"><a href="https://github.com/markdalgleish/eventralize" data-analytics-category="Fork" data-analytics-subcategory="Ribbon">Fork me on GitHub</a></div>
+
+	<section>
+
+		<div class="block">
+			<h3>Event handling done right.</h3>
+			<p>Provide a hash of mouse/keyboard events, selectors and function names&mdash;<strong>Eventralize</strong> will do the rest.</p>
+		</div>
+		
+		<div class="code block">
+<pre><code>$('#element').eventralize({
+  'event'          : 'functionName',
+  'event selector' : 'functionName',
+  'event selector, keydown(key) selector' : 'functionName'
+}, context, 'namespace'); // <- Optional event namespace</code></pre>
+		</div>
+
+		<div class="block">
+			<h3>Centralize your events.</h3>
+			<p>Keep your event handling logic in one place and enable or disable everything with only a single line.</p>
+		</div>
+
+<div class="code block">
+<pre><code>Gallery.prototype = {
+    events: {
+      'dblclick img' : 'zoom',
+      'click .close, keydown(esc) document'  : 'close',
+      'click .next, keydown(right) document' : 'next',
+      'click .prev, keydown(left) document'  : 'prev'
+    },
+    init: function(elem){
+      this.$elem = $(elem).eventralize(this.events, this);
+    },
+    destroy: function() {
+      this.$elem.uneventralize(this.events);
+    },
+    //All functions are passed an extended 'event' object
+    zoom  : function(event) { ... },
+    close : function(event) { ... },
+    next  : function(event) { ... },
+    prev  : function(event) { ... }
+};</code></pre>
+</div>
+
+		<div class="block">
+			<h3>Keyboard events made easy.</h3>
+			<p>Bind individual key presses or combinations at the same time as your mouse events.</p>
+		</div>
+		
+		<div class="code block">
+<pre><code>events: {
+  'click .money, keydown(shift+4) document' : 'money'
+},
+init: function(elem){
+  this.$elem = $(elem).eventralize(this.events, this);
+}
+money: function() {
+  alert('Vegas, baby!');
+}</code></pre>
+		</div>
+				
+		<div class="block">
+			<h3>Bind locally or globally.</h3>
+			<p>Bind events to the element or delegate based on your selector&mdash;or bind to the document, window or body.</p>
+		</div>
+		
+		<div class="code block">
+<pre><code>events: {
+  'click' : 'focus',
+  'click .toolbar .save' : 'save',
+  'scroll window' : 'handleScroll',
+  'resize window, orientationchange document' : 'reposition'
+}</code></pre>
+		</div>
+		
+		<div class="block">
+			<h3>Namespace everything at once.</h3>
+			<p>Provide a namespace as the optional third parameter and all of your events will be correctly namespaced.</p>
+		</div>
+		
+		<div class="code block">
+<pre><code>Gallery.prototype = {
+    events: {
+      ...
+    },
+    init: function(elem) {
+      this.$elem = $(elem);
+      this.$elem.eventralize(this.events, this, 'gallery');
+    }
+    destroy: function() {
+      this.$elem.uneventralize(this.events, 'gallery');
+    }
+}</code></pre>
+		</div>
+		
+		
+
+		<div class="block">
+			<h3>Full event functionality</h3>
+			<p>All functions are passed an extended 'event' object so you don't have to repeat yourself.</p>
+		</div>
+
+		<div class="code block">
+<pre><code>zoom: function(event) {
+  event.preventDefault();
+  event.stopPropagation();
+
+  //New event properties:
+  event.eventralize; //True
+  event.source; //The element matching the selector
+}</code></pre>
+		</div>
+
+	</section>
+	
+	<footer>
+		<div class="buttons">
+		  <a href="https://raw.github.com/markdalgleish/eventralize/master/jquery.eventralize.min.js" id="download-bottom" data-analytics-category="Download" data-analytics-subcategory="Bottom">Download the Plugin.</a> <a href="https://github.com/markdalgleish/eventralize" id="fork-bottom" data-analytics-category="Fork" data-analytics-subcategory="Bottom">Contribute on GitHub.</a>
+		</div>
+	
+		<div class="credits">
+			<p>&copy; 2011 <a href="http://www.markdalgleish.com" id="blog" target="_blank" data-analytics-category="Blog" data-analytics-subcategory="Footer">Mark Dalgleish</a>. This plugin is released under the <a href="https://github.com/markdalgleish/eventralize/blob/master/MIT-LICENSE.txt" id="license" target="_blank" data-analytics-category="License" data-analytics-subcategory="Footer">MIT License</a> <br />Follow me on Twitter! <a href="http://www.twitter.com/markdalgleish" id="twitter" target="_blank" data-analytics-category="Twitter" data-analytics-subcategory="Footer">@markdalgleish</a></p>
+		</div>
+	</footer>
+	
+</article>
+
+<script type="text/javascript">
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-21855678-1']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+</script>
+<script src="js/jquery.min.js"></script>
+<script src="js/jquery.easing.js"></script>
+<script src="js/prettify.js"></script>
+<script src="js/script.js"></script>
+</body>
+</html>
